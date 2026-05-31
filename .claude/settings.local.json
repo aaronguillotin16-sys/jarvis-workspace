@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\GAELASTOU44\\\\Downloads\\\\jarvis-starter-kit\\\\.secrets\")",
+      "Bash(\"C:\\\\Users\\\\GAELASTOU44\\\\AppData\\\\Roaming\\\\npm\\\\uipro.cmd\" init *)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}

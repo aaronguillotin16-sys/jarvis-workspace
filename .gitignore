@@ -1,0 +1,11 @@
+# Secrets — ne jamais commiter
+.env
+.secrets/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.vscode/
+*.swp
