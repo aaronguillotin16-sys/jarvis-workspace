@@ -75,6 +75,13 @@ function BookingModal({ service, onClose, userId }: { service: (typeof services)
     return date.getDay() !== 0;
   };
 
+  const isPastSlot = (slot: string) => {
+    const [h, m] = slot.split(':').map(Number);
+    const slotTime = new Date();
+    slotTime.setHours(h, m, 0, 0);
+    return slotTime <= new Date();
+  };
+
   const formatDate = (d: Date) =>
     `${DAYS[(d.getDay() + 6) % 7]} ${d.getDate()} ${MONTHS[d.getMonth()]}`;
 
@@ -263,7 +270,7 @@ function BookingModal({ service, onClose, userId }: { service: (typeof services)
                   ) : (
                   <div className="grid grid-cols-3 gap-2">
                     {TIME_SLOTS.map(t => {
-                      const unavail = bookedSlots.includes(t) || UNAVAILABLE_SLOTS.includes(t);
+                      const unavail = bookedSlots.includes(t) || UNAVAILABLE_SLOTS.includes(t) || (selectedDate?.toDateString() === today.toDateString() && isPastSlot(t));
                       const isSelected = selectedTime === t;
                       return (
                         <button key={t} disabled={unavail} onClick={() => setSelectedTime(t)}

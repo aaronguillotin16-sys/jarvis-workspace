@@ -62,8 +62,24 @@ Lycéen en 2e année de Bac Pro Vente dans un lycée à Saint-Nazaire. En parall
 
 ## Mes projets en cours
 
+- **Site The Butcher Food** : site vitrine pour le snack de Montoir-de-Bretagne (9 Rue Jean Jaurès, tél. 09 55 64 57 97, Instagram @the_butcherfood). Stack : Next.js 16 + TypeScript + Tailwind v4 + Framer Motion + react-parallax-tilt. Projet dans `C:\Users\GAELASTOU44\Downloads\butcher-food`. Statut : v2 terminée (01/06/2026), à présenter au gérant. Livrable initial dans `livrables/sites/2026-05-31_the-butcher-food/`.
+  - Design : palette noir et blanc, fond blanc uni, logo Butcher en hero (SVG placeholder, remplacer par logo.png réel)
+  - Menu : 6 onglets (Kebabs, Burgers, Tacos, Assiettes, Menu Enfant, Desserts). "Winders" = menu enfant clairement identifié. Desserts : Tiramisu maison + Tarte au Daim (prix à confirmer : 4€ chacun)
+  - Boutons : LiquidButton (effet verre liquide) sur tous les éléments cliquables
+  - Cartes produits : effet 3D tilt (react-parallax-tilt) au survol
+  - Commande : bouton téléphone métal + suivi de commande style Uber Eats
+  - Footer : noir avec liens Instagram/Facebook en LiquidButton
+  - Dépendances ajoutées : @radix-ui/react-slot, class-variance-authority, clsx, tailwind-merge
+  - Todo : ajouter logo.png réel dans public/ + confirmer les prix du menu avec le gérant
 - **Boutique e-commerce** : lancement d'une boutique en ligne type dropshipping. Phase de réflexion, pas encore lancé concrètement.
-- **Vente de sites web** : création de sites internet pour des commerces locaux (restaurants, entreprises) qui n'en ont pas. Phase de réflexion.
+- **Site Nomad Barber (V1)** : site vitrine pour nomadbarber44, barbier à domicile en Loire-Atlantique (TikTok : @nomadbarber44, Calendly : calendly.com/nomadbarber44). Stack : Next.js + TypeScript + Tailwind + Framer Motion. Projet dans `livrables/sites/nomad-barber-v1/`. Statut : V1 terminée (02/06/2026), à envoyer par mail au barber pour lui vendre.
+  - Hero : ScrollExpandMedia avec vraie photo client (cornrows, cape jaune/noire), fond blanc, titre "NOMAD BARBER" qui s'écarte au scroll
+  - Tarifs : 6 prestations style Apple (cards blanches sur fond #f5f5f7, prix lisibles, clic = calendrier custom)
+  - Calendrier intégré custom (pas de redirect Calendly) : bottom sheet iOS, sélection date + créneau, confirmation
+  - Galerie : photos réelles du barber (dossier `public/photos/`)
+  - Avis clients : 3 avis avec photos
+  - Todo : obtenir les vrais tarifs du barber, envoyer le mail de prospection
+- **Vente de sites web** : création de sites internet pour des commerces locaux. The Butcher Food = prototype n°1, Nomad Barber = prototype n°2 (en cours).
 - **Année scolaire** : Bac Pro Vente, 2e année. Priorité de réussir l'année.
 - **Jobs d'été** : centre de loisirs + plonge en restaurant pour constituer le capital de démarrage.
 

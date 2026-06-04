@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>L'Académie des Agents IA — La marketplace de l'expertise IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0A0A0F;
+    --bg-2: #0B0B14;
+    --card: #0F0F1A;
+    --card-2: #12121F;
+    --violet: #7C3AED;
+    --blue: #3B82F6;
+    --violet-soft: rgba(124, 58, 237, 0.16);
+    --blue-soft: rgba(59, 130, 246, 0.16);
+    --text: #ECECF2;
+    --text-2: #A0A0B2;
+    --text-3: #6B6B7E;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-2: rgba(255, 255, 255, 0.05);
+    --glass: rgba(255, 255, 255, 0.035);
+    --glass-2: rgba(255, 255, 255, 0.06);
+    --gold: #F5C451;
+    --radius: 18px;
+    --maxw: 1200px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Ambient gradient glows */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(680px 520px at 18% -8%, rgba(124, 58, 237, 0.22), transparent 60%),
+      radial-gradient(720px 560px at 92% 4%, rgba(59, 130, 246, 0.16), transparent 62%);
+  }
+
+  ::selection { background: rgba(124, 58, 237, 0.4); color: #fff; }
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  h1, h2, h3, .display { font-family: 'Inter Tight', 'Inter', sans-serif; letter-spacing: -0.02em; line-height: 1.05; }
+
+  .gradient-text {
+    background: linear-gradient(105deg, #C4B5FD 0%, var(--violet) 38%, var(--blue) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--violet); box-shadow: 0 0 10px 1px var(--violet); }
+
+  section { position: relative; z-index: 1; }
+
+  /* ===================== NAVBAR ===================== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    transition: background 0.3s var(--ease), border-color 0.3s var(--ease), backdrop-filter 0.3s;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled {
+    background: rgba(10, 10, 15, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .brand { display: flex; align-items: center; gap: 11px; font-family: 'Inter Tight'; font-weight: 700; font-size: 16.5px; letter-spacing: -0.01em; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 10px; flex: none;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--violet), var(--blue));
+    box-shadow: 0 6px 22px -6px rgba(124, 58, 237, 0.7);
+  }
+  .brand .mark svg { width: 19px; height: 19px; }
+  .nav-links { display: flex; align-items: center; gap: 6px; }
+  .nav-links a { font-size: 14.5px; font-weight: 500; color: var(--text-2); padding: 9px 14px; border-radius: 9px; transition: color 0.2s, background 0.2s; }
+  .nav-links a:hover { color: var(--text); background: var(--glass); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: 'Inter'; font-size: 14.5px; font-weight: 600;
+    padding: 11px 20px; border-radius: 11px; cursor: pointer; white-space: nowrap;
+    border: 1px solid transparent; transition: transform 0.2s var(--ease), box-shadow 0.25s var(--ease), background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .btn svg { width: 17px; height: 17px; }
+  .btn-ghost { color: var(--text-2); background: transparent; }
+  .btn-ghost:hover { color: var(--text); }
+  .btn-outline { color: var(--text); background: var(--glass); border-color: var(--line); backdrop-filter: blur(12px); }
+  .btn-outline:hover { border-color: rgba(124,58,237,0.5); background: var(--violet-soft); transform: translateY(-1px); }
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--violet), #6D28D9 55%, var(--blue));
+    box-shadow: 0 8px 26px -8px rgba(124, 58, 237, 0.8), inset 0 1px 0 rgba(255,255,255,0.18);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px -8px rgba(124, 58, 237, 0.85), inset 0 1px 0 rgba(255,255,255,0.18); }
+  .btn-lg { padding: 15px 26px; font-size: 15.5px; border-radius: 13px; }
+
+  /* ===================== HERO ===================== */
+  .hero { padding: 168px 0 96px; }
+  .hero-inner { max-width: 880px; }
+  .hero h1 { font-size: clamp(44px, 7vw, 78px); font-weight: 800; margin: 26px 0 0; }
+  .hero h1 .line { display: block; }
+  .hero-sub { font-size: clamp(17px, 2.2vw, 20px); color: var(--text-2); max-width: 600px; margin-top: 26px; line-height: 1.6; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 64px; }
+  .stat {
+    flex: 1; min-width: 170px;
+    padding: 24px 26px; border-radius: var(--radius);
+    background: var(--glass); border: 1px solid var(--line);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    position: relative; overflow: hidden;
+  }
+  .stat::after { content: ""; position: absolute; left: 0; top: 0; width: 38px; height: 2px; background: linear-gradient(90deg, var(--violet), var(--blue)); }
+  .stat .num { font-family: 'Inter Tight'; font-size: 38px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+  .stat .label { font-size: 13.5px; color: var(--text-2); margin-top: 9px; }
+
+  /* ===================== SECTION HEADERS ===================== */
+  .sec { padding: 96px 0; }
+  .sec-head { max-width: 620px; margin-bottom: 56px; }
+  .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+  .sec-head h2 { font-size: clamp(32px, 4.4vw, 50px); font-weight: 700; margin-top: 18px; }
+  .sec-head p { color: var(--text-2); font-size: 17px; margin-top: 16px; }
+
+  /* ===================== COMMENT ÇA MARCHE ===================== */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; position: relative; }
+  .step {
+    padding: 34px 30px; border-radius: var(--radius);
+    background: var(--card); border: 1px solid var(--line);
+    position: relative; transition: transform 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s;
+  }
+  .step:hover { transform: translateY(-5px); border-color: rgba(124,58,237,0.42); box-shadow: 0 24px 50px -22px rgba(124,58,237,0.5); }
+  .step-num { font-family: 'Inter Tight'; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; color: var(--violet); }
+  .step-icon {
+    width: 54px; height: 54px; border-radius: 14px; margin: 18px 0 22px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--violet-soft), var(--blue-soft));
+    border: 1px solid var(--line); color: #C4B5FD;
+  }
+  .step-icon svg { width: 26px; height: 26px; }
+  .step h3 { font-size: 21px; font-weight: 600; margin-bottom: 11px; }
+  .step p { color: var(--text-2); font-size: 15px; }
+  .step-arrow { position: absolute; right: -32px; top: 50%; transform: translateY(-50%); color: var(--text-3); z-index: 3; }
+  .step-arrow svg { width: 26px; height: 26px; }
+  .step:last-child .step-arrow { display: none; }
+
+  /* ===================== EXPERTS ===================== */
+  .filters { margin-bottom: 38px; }
+  .filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .filter-label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); width: 90px; flex: none; }
+  .chip {
+    font-size: 13.5px; font-weight: 500; color: var(--text-2);
+    padding: 8px 16px; border-radius: 100px; cursor: pointer;
+    background: var(--glass); border: 1px solid var(--line);
+    transition: all 0.2s var(--ease); user-select: none;
+  }
+  .chip:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .chip.active { color: #fff; background: linear-gradient(135deg, var(--violet), var(--blue)); border-color: transparent; box-shadow: 0 6px 18px -6px rgba(124,58,237,0.7); }
+
+  .experts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .expert {
+    border-radius: var(--radius); padding: 24px;
+    background: var(--card); border: 1px solid var(--line);
+    transition: transform 0.35s var(--ease), border-color 0.3s, box-shadow 0.35s, opacity 0.35s;
+    position: relative; overflow: hidden;
+  }
+  .expert::before { content: ""; position: absolute; inset: 0; border-radius: var(--radius); padding: 1px; background: linear-gradient(135deg, rgba(124,58,237,0.5), transparent 40%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.35s; }
+  .expert:hover { transform: translateY(-6px); border-color: transparent; box-shadow: 0 30px 60px -26px rgba(124,58,237,0.55); }
+  .expert:hover::before { opacity: 1; }
+  .expert.hide { display: none; }
+  .expert-top { display: flex; align-items: center; gap: 15px; }
+  .avatar {
+    width: 60px; height: 60px; border-radius: 50%; flex: none; position: relative;
+    display: grid; place-items: center; font-family: 'Inter Tight'; font-weight: 700; font-size: 21px; color: #fff;
+    border: 1px solid rgba(255,255,255,0.14);
+  }
+  .verified {
+    position: absolute; bottom: -2px; right: -2px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--violet));
+    display: grid; place-items: center; border: 2.5px solid var(--card);
+  }
+  .verified svg { width: 11px; height: 11px; color: #fff; }
+  .expert-name { font-family: 'Inter Tight'; font-size: 18px; font-weight: 700; }
+  .expert-spec { font-size: 13.5px; color: var(--text-2); margin-top: 3px; }
+  .badge-verif { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; color: #93C5FD; margin-top: 8px; padding: 4px 9px; border-radius: 100px; background: var(--blue-soft); border: 1px solid rgba(59,130,246,0.3); }
+  .badge-verif svg { width: 12px; height: 12px; }
+
+  .expert-tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 18px 0; }
+  .tag { font-size: 11.5px; font-weight: 500; color: var(--text-2); padding: 4px 11px; border-radius: 7px; background: var(--glass-2); border: 1px solid var(--line-2); }
+
+  .expert-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; border-top: 1px solid var(--line-2); }
+  .rating { display: flex; align-items: center; gap: 6px; }
+  .stars { display: flex; gap: 1px; }
+  .stars svg { width: 14px; height: 14px; color: var(--gold); }
+  .rating .val { font-size: 13.5px; font-weight: 600; }
+  .rating .count { font-size: 12.5px; color: var(--text-3); }
+  .price { text-align: right; }
+  .price .amt { font-family: 'Inter Tight'; font-size: 19px; font-weight: 700; }
+  .price .per { font-size: 11.5px; color: var(--text-3); }
+  .expert .btn { width: 100%; margin-top: 20px; }
+
+  .no-result { display: none; text-align: center; padding: 60px 0; color: var(--text-3); grid-column: 1 / -1; }
+  .no-result.show { display: block; }
+
+  /* ===================== TÉMOIGNAGES ===================== */
+  .testi-band { background: linear-gradient(180deg, transparent, rgba(124,58,237,0.04) 40%, transparent); }
+  .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .testi {
+    padding: 32px 30px; border-radius: var(--radius);
+    background: var(--glass); border: 1px solid var(--line);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    display: flex; flex-direction: column;
+    transition: transform 0.3s var(--ease), border-color 0.3s;
+  }
+  .testi:hover { transform: translateY(-4px); border-color: rgba(124,58,237,0.35); }
+  .quote-mark { font-family: 'Inter Tight'; font-size: 54px; line-height: 0.6; color: var(--violet); opacity: 0.5; height: 26px; }
+  .testi-quote { font-size: 16px; color: var(--text); line-height: 1.65; margin: 20px 0 26px; flex: 1; }
+  .testi-author { display: flex; align-items: center; gap: 13px; }
+  .logo-ph {
+    width: 46px; height: 46px; border-radius: 12px; flex: none;
+    display: grid; place-items: center; font-family: 'Inter Tight'; font-weight: 700; font-size: 16px;
+    background: var(--card-2); border: 1px solid var(--line); color: var(--text-2);
+  }
+  .testi-author .name { font-weight: 600; font-size: 14.5px; }
+  .testi-author .role { font-size: 12.5px; color: var(--text-2); margin-top: 2px; }
+
+  /* ===================== CTA FINAL ===================== */
+  .cta-final { padding: 96px 0; }
+  .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .cta-card {
+    padding: 48px 44px; border-radius: 24px; position: relative; overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .cta-card.exp { background: linear-gradient(150deg, rgba(124,58,237,0.18), var(--card) 70%); }
+  .cta-card.ent { background: linear-gradient(150deg, rgba(59,130,246,0.18), var(--card) 70%); }
+  .cta-card .glow { position: absolute; width: 280px; height: 280px; border-radius: 50%; filter: blur(70px); opacity: 0.5; top: -120px; right: -80px; }
+  .cta-card.exp .glow { background: var(--violet); }
+  .cta-card.ent .glow { background: var(--blue); }
+  .cta-card h3 { font-size: 28px; font-weight: 700; position: relative; }
+  .cta-card p { color: var(--text-2); margin: 14px 0 28px; position: relative; font-size: 15.5px; }
+  .cta-card .btn { position: relative; }
+
+  /* ===================== FOOTER ===================== */
+  footer { border-top: 1px solid var(--line-2); padding: 64px 0 36px; position: relative; z-index: 1; }
+  .foot-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  .foot-brand p { color: var(--text-2); font-size: 14px; margin: 18px 0 22px; max-width: 280px; }
+  .socials { display: flex; gap: 10px; }
+  .social { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--glass); border: 1px solid var(--line); color: var(--text-2); transition: all 0.2s var(--ease); }
+  .social:hover { color: #fff; border-color: rgba(124,58,237,0.5); background: var(--violet-soft); transform: translateY(-2px); }
+  .social svg { width: 17px; height: 17px; }
+  .foot-col h4 { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); margin-bottom: 18px; }
+  .foot-col a { display: block; color: var(--text-2); font-size: 14px; padding: 6px 0; transition: color 0.2s; }
+  .foot-col a:hover { color: var(--text); }
+  .foot-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid var(--line-2); flex-wrap: wrap; gap: 12px; }
+  .foot-bottom p { color: var(--text-3); font-size: 13px; }
+  .foot-bottom .legal { display: flex; gap: 22px; }
+  .foot-bottom .legal a { color: var(--text-3); font-size: 13px; transition: color 0.2s; }
+  .foot-bottom .legal a:hover { color: var(--text-2); }
+
+  /* ===================== REVEAL ANIMATION ===================== */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: 0.08s; }
+  .reveal.d2 { transition-delay: 0.16s; }
+  .reveal.d3 { transition-delay: 0.24s; }
+  .reveal.d4 { transition-delay: 0.32s; }
+  .reveal.d5 { transition-delay: 0.40s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ===================== RESPONSIVE ===================== */
+  .menu-btn { display: none; width: 42px; height: 42px; border-radius: 10px; background: var(--glass); border: 1px solid var(--line); color: var(--text); place-items: center; cursor: pointer; }
+  .menu-btn svg { width: 20px; height: 20px; }
+
+  @media (max-width: 980px) {
+    .steps, .experts, .testimonials { grid-template-columns: 1fr 1fr; }
+    .step-arrow { display: none !important; }
+    .foot-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 760px) {
+    .nav-links, .nav-actions .btn-ghost { display: none; }
+    .menu-btn { display: grid; }
+    .hero { padding: 132px 0 72px; }
+    .steps, .experts, .testimonials, .cta-grid { grid-template-columns: 1fr; }
+    .filter-label { width: 100%; }
+    .foot-top { grid-template-columns: 1fr 1fr; }
+    .cta-card { padding: 36px 28px; }
+    .sec, .cta-final, .hero { padding-left: 0; padding-right: 0; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 18px; }
+    .stat { min-width: 100%; }
+    .foot-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+      </span>
+      L'Académie des Agents IA
+    </a>
+    <div class="nav-links">
+      <a href="#explorer">Explorer</a>
+      <a href="#comment">Comment ça marche</a>
+      <a href="#temoignages">Témoignages</a>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost">Se connecter</a>
+      <a class="btn btn-primary">S'inscrire</a>
+      <button class="menu-btn" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <span class="eyebrow reveal"><span class="dot"></span>La marketplace de l'expertise en intelligence artificielle</span>
+    <h1 class="reveal d1">
+      <span class="line">Connectez votre entreprise</span>
+      <span class="line gradient-text">aux meilleurs talents IA</span>
+    </h1>
+    <p class="hero-sub reveal d2">Experts confirmés et jeunes diplômés spécialisés en IA, prêts à accompagner vos projets d'implémentation, de formation, de conseil et d'audit. Trouvez le bon profil en quelques clics.</p>
+    <div class="hero-cta reveal d3">
+      <a class="btn btn-primary btn-lg" href="#explorer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        Je cherche un expert
+      </a>
+      <a class="btn btn-outline btn-lg" href="#cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+        Je suis un expert
+      </a>
+    </div>
+    <div class="stats">
+      <div class="stat reveal d2"><div class="num gradient-text">500+</div><div class="label">Experts vérifiés</div></div>
+      <div class="stat reveal d3"><div class="num gradient-text">200+</div><div class="label">Entreprises accompagnées</div></div>
+      <div class="stat reveal d4"><div class="num gradient-text">98%</div><div class="label">Taux de satisfaction</div></div>
+      <div class="stat reveal d5"><div class="num gradient-text">48h</div><div class="label">Mise en relation moyenne</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMMENT ÇA MARCHE ===================== -->
+<section class="sec" id="comment">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow"><span class="dot"></span>Comment ça marche</span>
+      <h2>Trois étapes, zéro friction</h2>
+      <p>De la définition de votre besoin à la collaboration, nous avons pensé chaque étape pour vous faire gagner du temps.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">ÉTAPE 01</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </div>
+        <h3>Décrivez votre besoin</h3>
+        <p>Indiquez votre secteur, le type de mission et vos objectifs. Notre algorithme cible immédiatement les profils pertinents.</p>
+        <div class="step-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+      <div class="step reveal d1">
+        <div class="step-num">ÉTAPE 02</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Comparez les experts</h3>
+        <p>Consultez profils vérifiés, notations, références et tarifs. Échangez directement avec les candidats sélectionnés.</p>
+        <div class="step-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+      <div class="step reveal d2">
+        <div class="step-num">ÉTAPE 03</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+        </div>
+        <h3>Lancez la collaboration</h3>
+        <p>Contractualisez en toute sécurité, suivez l'avancement et bénéficiez d'un paiement protégé jusqu'à livraison.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERTS ===================== -->
+<section class="sec" id="explorer">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Explorer les talents</span>
+      <h2>Des experts pour chaque enjeu IA</h2>
+      <p>Filtrez par secteur et par type de service pour trouver le profil idéal en quelques secondes.</p>
+    </div>
+
+    <div class="filters reveal d1">
+      <div class="filter-row">
+        <span class="filter-label">Secteur</span>
+        <span class="chip active" data-group="sector" data-value="all">Tous</span>
+        <span class="chip" data-group="sector" data-value="sante">Santé</span>
+        <span class="chip" data-group="sector" data-value="finance">Finance</span>
+        <span class="chip" data-group="sector" data-value="industrie">Industrie</span>
+        <span class="chip" data-group="sector" data-value="retail">Retail</span>
+        <span class="chip" data-group="sector" data-value="rh">RH</span>
+        <span class="chip" data-group="sector" data-value="marketing">Marketing</span>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">Service</span>
+        <span class="chip active" data-group="service" data-value="all">Tous</span>
+        <span class="chip" data-group="service" data-value="implementation">Implémentation IA</span>
+        <span class="chip" data-group="service" data-value="formation">Formation</span>
+        <span class="chip" data-group="service" data-value="conseil">Conseil</span>
+        <span class="chip" data-group="service" data-value="audit">Audit</span>
+      </div>
+    </div>
+
+    <div class="experts" id="experts">
+      <!-- Cards injected by JS -->
+    </div>
+    <div class="no-result" id="noResult">Aucun expert ne correspond à ces filtres pour le moment.</div>
+  </div>
+</section>
+
+<!-- ===================== TÉMOIGNAGES ===================== -->
+<section class="sec testi-band" id="temoignages">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow"><span class="dot"></span>Témoignages</span>
+      <h2>Ils nous font confiance</h2>
+      <p>Des entreprises de toutes tailles transforment leurs ambitions IA en résultats concrets.</p>
+    </div>
+    <div class="testimonials">
+      <div class="testi reveal">
+        <div class="quote-mark">"</div>
+        <p class="testi-quote">En trois semaines, nous avons déployé un assistant IA pour notre service client. L'expert recommandé par la plateforme connaissait parfaitement nos contraintes réglementaires.</p>
+        <div class="testi-author">
+          <div class="logo-ph" style="color:#C4B5FD;">VX</div>
+          <div><div class="name">Élodie Fontaine</div><div class="role">Directrice Innovation · Groupe Vortex</div></div>
+        </div>
+      </div>
+      <div class="testi reveal d1">
+        <div class="quote-mark">"</div>
+        <p class="testi-quote">La qualité des profils est impressionnante. Nous avons formé l'ensemble de nos équipes data à l'IA générative avec un formateur d'exception, noté à juste titre 5 étoiles.</p>
+        <div class="testi-author">
+          <div class="logo-ph" style="color:#93C5FD;">NX</div>
+          <div><div class="name">Karim Slimani</div><div class="role">CTO · Nexora</div></div>
+        </div>
+      </div>
+      <div class="testi reveal d2">
+        <div class="quote-mark">"</div>
+        <p class="testi-quote">L'audit de notre infrastructure IA nous a évité plusieurs mois d'erreurs. Mise en relation rapide, paiement sécurisé, suivi irréprochable. Nous reviendrons.</p>
+        <div class="testi-author">
+          <div class="logo-ph" style="color:#A78BFA;">ML</div>
+          <div><div class="name">Julie Berthier</div><div class="role">Responsable Data · Maison Lumen</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA FINAL ===================== -->
+<section class="cta-final" id="cta">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <h2>Prêt à passer à l'action ?</h2>
+      <p>Que vous cherchiez un expert ou que vous en soyez un, votre prochaine opportunité commence ici.</p>
+    </div>
+    <div class="cta-grid">
+      <div class="cta-card ent reveal">
+        <span class="glow"></span>
+        <h3>Vous êtes une entreprise</h3>
+        <p>Accédez à un vivier de talents IA vérifiés et lancez votre projet avec un accompagnement de bout en bout.</p>
+        <a class="btn btn-primary btn-lg">Trouver un expert</a>
+      </div>
+      <div class="cta-card exp reveal d1">
+        <span class="glow"></span>
+        <h3>Vous êtes un expert IA</h3>
+        <p>Rejoignez la communauté, valorisez votre expertise et trouvez des missions à la hauteur de votre talent.</p>
+        <a class="btn btn-outline btn-lg">Rejoindre l'Académie</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#top" class="brand">
+          <span class="mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          L'Académie des Agents IA
+        </a>
+        <p>La marketplace qui connecte les entreprises aux meilleurs talents de l'intelligence artificielle.</p>
+        <div class="socials">
+          <a class="social" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77Z"/></svg></a>
+          <a class="social" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.63 7.58H.48l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93Zm-1.29 19.5h2.04L6.49 3.24H4.3L17.61 20.65Z"/></svg></a>
+          <a class="social" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.27a11 11 0 0 0-3.48 21.46c.55.09.73-.24.73-.53v-1.85c-3.03.66-3.67-1.46-3.67-1.46-.5-1.27-1.21-1.6-1.21-1.6-.99-.68.07-.66.07-.66 1.1.07 1.67 1.13 1.67 1.13.97 1.67 2.55 1.18 3.18.9.1-.71.38-1.18.69-1.45-2.42-.28-4.96-1.21-4.96-5.38 0-1.19.42-2.16 1.12-2.92-.11-.28-.49-1.39.11-2.89 0 0 .92-.29 3 1.12a10.4 10.4 0 0 1 5.46 0c2.08-1.41 3-1.12 3-1.12.6 1.5.22 2.61.11 2.89.7.76 1.12 1.73 1.12 2.92 0 4.18-2.55 5.1-4.98 5.37.39.34.74 1 .74 2.03v3.01c0 .29.18.63.74.52A11 11 0 0 0 12 1.27Z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Plateforme</h4>
+        <a href="#explorer">Explorer les experts</a>
+        <a href="#comment">Comment ça marche</a>
+        <a href="#temoignages">Témoignages</a>
+        <a href="#cta">Devenir expert</a>
+      </div>
+      <div class="foot-col">
+        <h4>Services</h4>
+        <a>Implémentation IA</a>
+        <a>Formation</a>
+        <a>Conseil</a>
+        <a>Audit</a>
+      </div>
+      <div class="foot-col">
+        <h4>Ressources</h4>
+        <a>Centre d'aide</a>
+        <a>Blog</a>
+        <a>Tarifs</a>
+        <a>Contact</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 L'Académie des Agents IA. Tous droits réservés.</p>
+      <div class="legal">
+        <a>Mentions légales</a>
+        <a>Confidentialité</a>
+        <a>CGU</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ===== Data: experts =====
+  const experts = [
+    { name: "Camille Rousseau", initials: "CR", spec: "Implémentation IA · Santé", sector: "sante", service: "implementation", tags: ["NLP médical", "RGPD", "MLOps"], rating: 4.9, count: 47, price: "850" , g: ["#7C3AED","#3B82F6"] },
+    { name: "Thomas Lefebvre", initials: "TL", spec: "Conseil & Stratégie IA · Finance", sector: "finance", service: "conseil", tags: ["Stratégie data", "Risk", "Scoring"], rating: 5.0, count: 62, price: "1 200", g: ["#6D28D9","#2563EB"] },
+    { name: "Aïcha Benali", initials: "AB", spec: "Formation & Upskilling · RH", sector: "rh", service: "formation", tags: ["IA générative", "Ateliers", "Change"], rating: 4.8, count: 38, price: "720", g: ["#8B5CF6","#3B82F6"] },
+    { name: "Lucas Moreau", initials: "LM", spec: "Audit & Gouvernance IA · Industrie", sector: "industrie", service: "audit", tags: ["AI Act", "Computer vision", "Sécurité"], rating: 4.9, count: 51, price: "980", g: ["#7C3AED","#4F46E5"] },
+    { name: "Sofia Marchetti", initials: "SM", spec: "Data & Machine Learning · Retail", sector: "retail", service: "implementation", tags: ["Recommandation", "Prévision", "MLOps"], rating: 4.7, count: 29, price: "890", g: ["#9333EA","#3B82F6"] },
+    { name: "Mehdi Haddad", initials: "MH", spec: "IA Générative · Marketing", sector: "marketing", service: "conseil", tags: ["LLM", "Contenu", "Automation"], rating: 5.0, count: 44, price: "1 050", g: ["#7C3AED","#60A5FA"] }
+  ];
+
+  const star = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg>';
+  const verifiedIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+
+  function starsHTML(r) {
+    let s = "";
+    for (let i = 0; i < 5; i++) s += star;
+    return s;
+  }
+
+  function renderExperts() {
+    const wrap = document.getElementById("experts");
+    wrap.innerHTML = experts.map(e => `
+      <article class="expert reveal" data-sector="${e.sector}" data-service="${e.service}">
+        <div class="expert-top">
+          <div class="avatar" style="background:linear-gradient(135deg, ${e.g[0]}, ${e.g[1]});">
+            ${e.initials}
+            <span class="verified" title="Profil vérifié">${verifiedIcon}</span>
+          </div>
+          <div>
+            <div class="expert-name">${e.name}</div>
+            <div class="expert-spec">${e.spec}</div>
+            <span class="badge-verif">${verifiedIcon} Vérifié</span>
+          </div>
+        </div>
+        <div class="expert-tags">${e.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <div class="expert-meta">
+          <div class="rating">
+            <span class="stars">${starsHTML(e.rating)}</span>
+            <span class="val">${e.rating.toFixed(1)}</span>
+            <span class="count">(${e.count})</span>
+          </div>
+          <div class="price"><span class="amt">${e.price} €</span> <span class="per">/ jour</span></div>
+        </div>
+        <a class="btn btn-outline">Voir le profil</a>
+      </article>
+    `).join("");
+    observeReveals();
+  }
+
+  // ===== Filters =====
+  let activeSector = "all", activeService = "all";
+
+  function applyFilters() {
+    let visible = 0;
+    document.querySelectorAll(".expert").forEach(card => {
+      const okSector = activeSector === "all" || card.dataset.sector === activeSector;
+      const okService = activeService === "all" || card.dataset.service === activeService;
+      const show = okSector && okService;
+      card.classList.toggle("hide", !show);
+      if (show) visible++;
+    });
+    document.getElementById("noResult").classList.toggle("show", visible === 0);
+  }
+
+  document.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      const group = chip.dataset.group;
+      document.querySelectorAll(`.chip[data-group="${group}"]`).forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      if (group === "sector") activeSector = chip.dataset.value;
+      else activeService = chip.dataset.value;
+      applyFilters();
+    });
+  });
+
+  // ===== Navbar scroll state =====
+  const nav = document.getElementById("nav");
+  function onScroll() { nav.classList.toggle("scrolled", window.scrollY > 20); }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // ===== Scroll reveal =====
+  let io;
+  function revealNow(el) { el.classList.add("in"); if (io) io.unobserve(el); }
+  function inViewport(el) {
+    const r = el.getBoundingClientRect();
+    return r.top < (window.innerHeight || document.documentElement.clientHeight) && r.bottom > 0;
+  }
+  function observeReveals() {
+    const supported = typeof IntersectionObserver === "function";
+    if (supported && !io) {
+      io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) revealNow(en.target); });
+      }, { threshold: 0.08, rootMargin: "0px 0px -8% 0px" });
+    }
+    document.querySelectorAll(".reveal:not(.in)").forEach(el => {
+      if (!supported) { revealNow(el); return; }
+      if (inViewport(el)) { revealNow(el); return; } // already on-screen at observe time
+      io.observe(el);
+    });
+    // Safety net: if the observer never fires, force everything visible.
+    clearTimeout(window.__revealFallback);
+    window.__revealFallback = setTimeout(() => {
+      document.querySelectorAll(".reveal:not(.in)").forEach(revealNow);
+    }, 1200);
+  }
+
+  renderExperts();
+  observeReveals();
+</script>
+
+</body>
+</html>
